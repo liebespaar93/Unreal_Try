@@ -36,4 +36,12 @@ public:
 	UFUNCTION()
 	void OnInputCharacterMovement(const FInputActionInstance& Instance);
 
+
+	UPROPERTY(EditAnywhere, Category = "Enhanced Inputs")
+	UInputAction* uIA_Look;
+
+	UFUNCTION()
+	void OnInputCharacterLook(const FInputActionInstance& Instance);
+
+
 };

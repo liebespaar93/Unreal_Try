@@ -14,6 +14,11 @@ UCPP_TPSCharacterMovementComponent::UCPP_TPSCharacterMovementComponent()
 		this->uIA_Movement = tempInputMovement.Object;
 	}
 
+	ConstructorHelpers::FObjectFinder<UInputAction> tempInputLook(TEXT("/Script/EnhancedInput.InputAction'/Game/Kyoulee/Inputs/Actions/IA_TPSLook.IA_TPSLook'"));
+	if (tempInputLook.Succeeded()) {
+		this->uIA_Look = tempInputLook.Object;
+	}
+
 }
 
 void UCPP_TPSCharacterMovementComponent::InitializeComponent()
@@ -43,6 +48,7 @@ void UCPP_TPSCharacterMovementComponent::SetupOwnerInputBinding(UEnhancedInputCo
 {
 	UE_LOG(LogTemp, Display, TEXT("UEnhancedInput BindAction Setting "));
 	EnhancedInputComp->BindAction(uIA_Movement, ETriggerEvent::Triggered, this, &UCPP_TPSCharacterMovementComponent::OnInputCharacterMovement);
+	EnhancedInputComp->BindAction(uIA_Look, ETriggerEvent::Triggered, this, &UCPP_TPSCharacterMovementComponent::OnInputCharacterLook);
 }
 
 void UCPP_TPSCharacterMovementComponent::OnInputCharacterMovement(const FInputActionInstance& Instance)
@@ -50,5 +56,13 @@ void UCPP_TPSCharacterMovementComponent::OnInputCharacterMovement(const FInputAc
 	FVector2D AxisValue2D = Instance.GetValue().Get<FVector2D>();
 
 	this->MovementDir = FVector(AxisValue2D.X, AxisValue2D.Y, 0);
+}
+
+void UCPP_TPSCharacterMovementComponent::OnInputCharacterLook(const FInputActionInstance& Instance)
+{
+	FVector2D AxisValue2D = Instance.GetValue().Get<FVector2D>();
+
+	this->Owner->uCameraSpringArmComp->AddRelativeRotation(FRotator(AxisValue2D.Y, AxisValue2D.X, 0));
 	UE_LOG(LogTemp, Display, TEXT("x :%f y : %f"), AxisValue2D.X, AxisValue2D.Y);
+
 }
