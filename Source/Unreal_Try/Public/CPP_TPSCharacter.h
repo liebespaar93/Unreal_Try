@@ -49,6 +49,12 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
 	TSoftObjectPtr<UInputMappingContext> InputMapping;
 
+	// Components
 	UPROPERTY(EditDefaultsOnly)
 	class UCPP_TPSCharacterMovementComponent* MovementComp;
+
+	UPROPERTY(EditDefaultsOnly)
+	class UCPP_TPSCharacterGunComponent* GunComp;
+
+
 };
