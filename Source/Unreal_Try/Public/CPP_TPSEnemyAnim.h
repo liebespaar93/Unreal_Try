@@ -30,4 +30,11 @@ public:
 
 	bool bAttack = false;
 
+	UFUNCTION()
+	void AnimNotify_AttackStart();
+
+	UFUNCTION()
+	void AnimNotify_AttackEnd();
+
+
 };

@@ -4,6 +4,7 @@
 #include "CPP_TPSEnemyFSMComponent.h"
 #include "CPP_TPSEnemyAnim.h"
 #include "CPP_TPSEnemy.h"
+#include "CPP_TPSCharacter.h"
 #include "AIController.h"
 
 // Sets default values for this component's properties
@@ -89,24 +90,48 @@ void UCPP_TPSEnemyFSMComponent::ActionMove(const float DeltaTime)
 	}
 
 	this->Owner->AddMovementInput(moveDir);
+
+	this->Owner->SetActorRotation(moveDir.Rotation());
 }
 
 void UCPP_TPSEnemyFSMComponent::ActionAttack(const float DeltaTime)
 {
 	FVector Dir = this->Target->GetActorLocation() - this->Owner->GetActorLocation();
-	
+
+	if (this->Owner->EnemyAnim->bAttack)
+		return;
+
 	if (Dir.Length() > 100)
 	{
 		UE_LOG(LogTemp, Display, TEXT("MOVE"));
 		SetState(ETPSEnemyState::MOVE);
 		return;
 	}
-	this->Owner->EnemyAnim->bAttack = true;
-	
 }
 
 void UCPP_TPSEnemyFSMComponent::ActionDead(const float DeltaTime)
 {
+}
 
+void UCPP_TPSEnemyFSMComponent::OnMyTakeDamage(float value)
+{
+	if (value < 0)
+		return;
+	this->Hp -= value;
+	if (this->Hp <= 0)
+	{
+		SetState(ETPSEnemyState::DEAD);
+	}
+}
+
+void UCPP_TPSEnemyFSMComponent::OnMyEndAttack(float value)
+{
+
+	if (this->Owner->GetDistanceTo(this->Target) > 200)
+		return;
+	ACPP_TPSCharacter* tpsTarget = Cast<ACPP_TPSCharacter>(this->Target);
+
+	if (tpsTarget)
+		tpsTarget->OnTakeDamage(1);
 }
 

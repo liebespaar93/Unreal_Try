@@ -57,4 +57,13 @@ public:
 	class UCPP_TPSCharacterGunComponent* GunComp;
 
 
+	UPROPERTY()
+	float MaxHp = 3;
+	float Hp;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="AnimMontage")
+	UAnimMontage* uMTG_Dead;
+
+	bool OnTakeDamage(float value = 1);
+
 };

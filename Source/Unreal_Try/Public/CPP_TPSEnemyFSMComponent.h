@@ -71,4 +71,12 @@ public:
 	
 	void ActionDead(const float DeltaTime);
 
+
+	UFUNCTION(BlueprintCallable)
+	void OnMyTakeDamage(float value = 1);
+
+
+	UFUNCTION(BlueprintCallable)
+	void OnMyEndAttack(float value = 1);
+
 };

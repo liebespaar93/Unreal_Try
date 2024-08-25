@@ -51,6 +51,8 @@ void ACPP_TPSCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	this->Hp = this->MaxHp;
+
 	APlayerController* playerCtr = Cast<APlayerController>(this->Controller);
 	ULocalPlayer* LocalPlayer = Cast<ULocalPlayer>(playerCtr->Player);
 	if (LocalPlayer) {
@@ -86,5 +88,19 @@ void ACPP_TPSCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 	UE_LOG(LogTemp, Warning, TEXT("SetupPlayerInputComponent"));
 	this->EnhancedInputComp = Input;
 	//InputBindingDelegate.Broadcast(Input);
+}
+
+bool ACPP_TPSCharacter::OnTakeDamage(float value)
+{
+	if (value < 0)
+		return false;
+	UE_LOG(LogTemp, Display, TEXT("hit player"));
+	this->Hp -= value;
+	if (this->Hp < 0)
+	{
+		this->PlayAnimMontage(uMTG_Dead);
+		return true;
+	}
+	return false;
 }
 
