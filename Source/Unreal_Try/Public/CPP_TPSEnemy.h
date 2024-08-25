@@ -23,9 +23,12 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
 	UPROPERTY(BlueprintReadOnly)
 	USkeletalMesh* uCharacterSkeletalMesh;
+
+	// Components
+	UPROPERTY(EditDefaultsOnly)
+	class UCPP_TPSEnemyFSMComponent* EnemyFSMComp;
+
+	class UCPP_TPSEnemyAnim* EnemyAnim;
 };
