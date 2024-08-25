@@ -7,9 +7,7 @@ void UCPP_TPSCharaterAnim::NativeInitializeAnimation()
 {
 	Super::NativeInitializeAnimation();
 
-	// 케릭터 이동 속도 가져오기
 	this->Owner = Cast<ACPP_TPSCharacter>(this->TryGetPawnOwner());
-
 }
 
 void UCPP_TPSCharaterAnim::NativeUpdateAnimation(float DeltaSeconds)

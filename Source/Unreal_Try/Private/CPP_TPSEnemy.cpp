@@ -2,6 +2,8 @@
 
 
 #include "CPP_TPSEnemy.h"
+#include "CPP_TPSEnemyFSMComponent.h"
+#include "CPP_TPSEnemyAnim.h"
 
 // Sets default values
 ACPP_TPSEnemy::ACPP_TPSEnemy()
@@ -10,7 +12,7 @@ ACPP_TPSEnemy::ACPP_TPSEnemy()
 	PrimaryActorTick.bCanEverTick = true;
 
 	// Load Character Mesh
-	ConstructorHelpers::FObjectFinder<USkeletalMesh> tempCharacterSkeletalMesh(TEXT("/ Script / Engine.SkeletalMesh'/Game/Kyoulee/BluePrints/Enemy/Ch32_nonPBR_UE.Ch32_nonPBR_UE'"));
+	ConstructorHelpers::FObjectFinder<USkeletalMesh> tempCharacterSkeletalMesh(TEXT("/Script/Engine.SkeletalMesh'/Game/Kyoulee/Enemy/Enemy.Enemy'"));
 
 	if (tempCharacterSkeletalMesh.Succeeded()) {
 		this->uCharacterSkeletalMesh = tempCharacterSkeletalMesh.Object;
@@ -19,7 +21,15 @@ ACPP_TPSEnemy::ACPP_TPSEnemy()
 		this->GetMesh()->SetRelativeLocation(FVector(0, 0, -90));
 	}
 
-	
+	/*ConstructorHelpers::FClassFinder<UAnimInstance> tempAnimBP(TEXT("/Script/Engine.AnimBlueprint'/Game/Kyoulee/Enemy/Anim/ABP_Enemy.ABP_Enemy'"));
+
+	if (tempAnimBP.Succeeded())
+	{
+		this->GetMesh()->SetAnimClass(tempAnimBP.Class);
+	}*/
+
+	EnemyFSMComp = CreateDefaultSubobject<UCPP_TPSEnemyFSMComponent>(FName("EnemyFSMComp"));
+
 }
 
 // Called when the game starts or when spawned
@@ -27,19 +37,11 @@ void ACPP_TPSEnemy::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	this->EnemyAnim = Cast<UCPP_TPSEnemyAnim>(this->GetMesh()->GetAnimInstance());
 }
 
 // Called every frame
 void ACPP_TPSEnemy::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
-
-// Called to bind functionality to input
-void ACPP_TPSEnemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
-}
-
