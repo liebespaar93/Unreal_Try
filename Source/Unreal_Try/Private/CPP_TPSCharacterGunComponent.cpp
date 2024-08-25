@@ -2,6 +2,8 @@
 
 
 #include "CPP_TPSCharacterGunComponent.h"
+#include "CPP_TPSEnemy.h"
+#include "CPP_TPSEnemyFSMComponent.h"
 #include "Components/ArrowComponent.h"
 #include "Components/ChildActorComponent.h"
 UCPP_TPSCharacterGunComponent::UCPP_TPSCharacterGunComponent()
@@ -87,7 +89,15 @@ void UCPP_TPSCharacterGunComponent::OnInputCharacterFire(const FInputActionInsta
 			// Do something with the Actor here
 			// Example:
 			UStaticMeshComponent* aSomeComp = Cast<UStaticMeshComponent>(Hit.GetActor()->GetRootComponent());
-			if (aSomeComp)
+			ACPP_TPSEnemy* enemy = Cast<ACPP_TPSEnemy>(Hit.GetActor());
+			if (enemy)
+			{
+				UCPP_TPSEnemyFSMComponent* enemyFSM= enemy->GetComponentByClass<UCPP_TPSEnemyFSMComponent>();
+				if (enemyFSM)
+					enemyFSM->OnMyTakeDamage(1);
+				UE_LOG(LogTemp, Display, TEXT("Hit Enemy"));
+			}
+			else if (aSomeComp)
 			{
 				aSomeComp->AddImpulse(this->Owner->uCharacterCamearaComp->GetForwardVector() * 1000.f * aSomeComp->GetMass());
 			}

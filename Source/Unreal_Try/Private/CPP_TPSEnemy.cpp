@@ -28,8 +28,7 @@ ACPP_TPSEnemy::ACPP_TPSEnemy()
 		this->GetMesh()->SetAnimClass(tempAnimBP.Class);
 	}*/
 
-	EnemyFSMComp = CreateDefaultSubobject<UCPP_TPSEnemyFSMComponent>(FName("EnemyFSMComp"));
-
+	EnemyFSMComp = CreateDefaultSubobject<UCPP_TPSEnemyFSMComponent>(TEXT("EnemyFSMComp"));
 }
 
 // Called when the game starts or when spawned

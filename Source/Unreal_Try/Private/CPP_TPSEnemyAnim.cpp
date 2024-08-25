@@ -20,3 +20,16 @@ void UCPP_TPSEnemyAnim::NativeUpdateAnimation(float DeltaSeconds)
 	if (!Owner)
 		return;
 }
+
+void UCPP_TPSEnemyAnim::AnimNotify_AttackStart()
+{
+	this->bAttack = true;
+}
+
+void UCPP_TPSEnemyAnim::AnimNotify_AttackEnd()
+{
+	this->bAttack = false;
+	UCPP_TPSEnemyFSMComponent* enemyFSM = Owner->GetComponentByClass<UCPP_TPSEnemyFSMComponent>();
+	enemyFSM->OnMyEndAttack();
+}
+
