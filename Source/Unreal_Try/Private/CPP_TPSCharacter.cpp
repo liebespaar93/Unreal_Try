@@ -5,6 +5,7 @@
 #include <EnhancedInputSubsystems.h>
 #include <EnhancedInputComponent.h>
 #include "CPP_TPSCharacterMovementComponent.h"
+#include "CPP_TPSCharacterGunComponent.h"
 
 // Sets default values
 ACPP_TPSCharacter::ACPP_TPSCharacter()
@@ -29,8 +30,10 @@ ACPP_TPSCharacter::ACPP_TPSCharacter()
 	this->uCameraSpringArmComp->SetupAttachment(this->GetRootComponent());
 	this->uCharacterCamearaComp->SetupAttachment(this->uCameraSpringArmComp);
 
-	this->uCameraSpringArmComp->TargetOffset = FVector(0, 30, 70);
-	this->uCameraSpringArmComp->SocketOffset = FVector(150, 0, 0);
+	//this->uCameraSpringArmComp->TargetOffset = FVector(0, 30, 70);
+	this->uCameraSpringArmComp->SocketOffset = FVector(0, 30, 70);
+	this->uCameraSpringArmComp->TargetArmLength = 250;
+	this->uCharacterCamearaComp->bUsePawnControlRotation = true;
 
 
 	// Input Component Setting
@@ -40,7 +43,7 @@ ACPP_TPSCharacter::ACPP_TPSCharacter()
 		this->InputMapping = tempInputMappingContext.Object;
 	}
 	MovementComp = CreateDefaultSubobject < UCPP_TPSCharacterMovementComponent>(TEXT("MovementComp"));
-
+	GunComp = CreateDefaultSubobject< UCPP_TPSCharacterGunComponent>(TEXT("GunComp"));
 }
 
 // Called when the game starts or when spawned

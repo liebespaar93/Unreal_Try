@@ -9,7 +9,6 @@ ACPP_TPSEnemy::ACPP_TPSEnemy()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-
 	// Load Character Mesh
 	ConstructorHelpers::FObjectFinder<USkeletalMesh> tempCharacterSkeletalMesh(TEXT("/ Script / Engine.SkeletalMesh'/Game/Kyoulee/BluePrints/Enemy/Ch32_nonPBR_UE.Ch32_nonPBR_UE'"));
 

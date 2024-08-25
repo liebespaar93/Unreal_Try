@@ -24,6 +24,7 @@ UCPP_TPSCharacterMovementComponent::UCPP_TPSCharacterMovementComponent()
 void UCPP_TPSCharacterMovementComponent::InitializeComponent()
 {
 	Super::InitializeComponent();
+
 	UE_LOG(LogTemp, Display, TEXT("CPP_TPSCharacterMoveMentComp InitializeComponent Setting "));
 }
 
@@ -41,6 +42,8 @@ void UCPP_TPSCharacterMovementComponent::BeginPlay()
 
 void UCPP_TPSCharacterMovementComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
+	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+
 	this->Owner->AddMovementInput(this->MovementDir);
 }
 
@@ -55,14 +58,17 @@ void UCPP_TPSCharacterMovementComponent::OnInputCharacterMovement(const FInputAc
 {
 	FVector2D AxisValue2D = Instance.GetValue().Get<FVector2D>();
 
-	this->MovementDir = FVector(AxisValue2D.X, AxisValue2D.Y, 0);
+	FVector forward = this->Owner->GetActorForwardVector() * AxisValue2D.X;
+	FVector right = this->Owner->GetActorRightVector() * AxisValue2D.Y;
+
+	this->MovementDir = forward + right;
+	this->MovementDir.Normalize();
 }
 
 void UCPP_TPSCharacterMovementComponent::OnInputCharacterLook(const FInputActionInstance& Instance)
 {
 	FVector2D AxisValue2D = Instance.GetValue().Get<FVector2D>();
-
-	this->Owner->uCameraSpringArmComp->AddRelativeRotation(FRotator(AxisValue2D.Y, AxisValue2D.X, 0));
-	UE_LOG(LogTemp, Display, TEXT("x :%f y : %f"), AxisValue2D.X, AxisValue2D.Y);
-
+	
+	this->Owner->AddControllerYawInput(AxisValue2D.X);
+	this->Owner->AddControllerPitchInput(AxisValue2D.Y);
 }
