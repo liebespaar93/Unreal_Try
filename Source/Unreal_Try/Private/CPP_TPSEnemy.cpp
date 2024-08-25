@@ -10,7 +10,7 @@ ACPP_TPSEnemy::ACPP_TPSEnemy()
 	PrimaryActorTick.bCanEverTick = true;
 
 	// Load Character Mesh
-	ConstructorHelpers::FObjectFinder<USkeletalMesh> tempCharacterSkeletalMesh(TEXT("/ Script / Engine.SkeletalMesh'/Game/Kyoulee/BluePrints/Enemy/Ch32_nonPBR_UE.Ch32_nonPBR_UE'"));
+	ConstructorHelpers::FObjectFinder<USkeletalMesh> tempCharacterSkeletalMesh(TEXT("/Script/Engine.SkeletalMesh'/Game/Kyoulee/Enemy/Enemy.Enemy'"));
 
 	if (tempCharacterSkeletalMesh.Succeeded()) {
 		this->uCharacterSkeletalMesh = tempCharacterSkeletalMesh.Object;
